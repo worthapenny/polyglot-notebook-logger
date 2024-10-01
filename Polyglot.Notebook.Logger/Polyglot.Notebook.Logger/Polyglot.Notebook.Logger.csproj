@@ -1,10 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <BaseOutputPath>..\..\Output\$(TargetName)\bin\</BaseOutputPath>	  
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<BaseOutputPath>..\..\Output\$(TargetName)\bin\</BaseOutputPath>
+		<PackageId>Polygot.Notebook.Logger</PackageId>
+		<Version>1.0.0</Version>
+		<Author>Worthapenny</Author>
+		<Product>Notebook Logger</Product>
+		<Description>A teeny-tiny logging library for Notebook</Description>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\READEM.md" Pack="true" PackagePath="\"/>
+		<None Include="..\LICENSE" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 
 </Project>
