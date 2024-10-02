@@ -24,10 +24,14 @@ Log.Critical("Hi there, I am Polyglot.Notebook.Logger");
 
 A **COLORED** logging will be display in the output cell. The TEXT of which looks like:
 
-```
+```bat
 01 03:25:01.09 | Debug | Hi there, I am Polyglot.Notebook.Logger
 01 03:25:01.10 | Debug | Hi there, I am Polyglot.Notebook.Logger
 01 03:25:01.10 | Warn  | Hi there, I am Polyglot.Notebook.Logger
 01 03:25:01.10 | Err   | Hi there, I am Polyglot.Notebook.Logger
 01 03:25:01.10 | Crit  | Hi there, I am Polyglot.Notebook.Logger
 ```
+
+## Example (Notebook)
+
+See [Example.ipynb](Example.ipynb) to get started!
