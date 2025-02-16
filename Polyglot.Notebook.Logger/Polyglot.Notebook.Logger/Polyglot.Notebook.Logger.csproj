@@ -7,7 +7,7 @@
 		<BaseOutputPath>..\..\Output\$(TargetName)\bin\</BaseOutputPath>
 		<PackageId>Polyglot.Notebook.Logger</PackageId>
 		<Title>Logging in Notebook (Polyglot)</Title>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Author>Worthapenny</Author>
 		<Product>Notebook Logger</Product>
 		<Description>A teeny-tiny logging library for Notebook</Description>
@@ -16,7 +16,7 @@
 		<PackageProjectUrl>https://github.com/worthapenny/polyglot-notebook-logger</PackageProjectUrl>
 		<PackageIcon>Icon.png</PackageIcon>
 		<PackageTags>notebook;logging;logger;interactive;polyglot;shell;command;console;</PackageTags>
-		<PackageReleaseNotes>Bug Fix. Simlified the Log class to minimize the clutter</PackageReleaseNotes>
+		<PackageReleaseNotes>Add ProgressIndicator class. Log.Error can now take Exception</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
