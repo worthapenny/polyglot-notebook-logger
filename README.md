@@ -32,6 +32,21 @@ A **COLORED** logging will be display in the output cell. The TEXT of which look
 01 03:25:01.10 | Crit  | Hi there, I am Polyglot.Notebook.Logger
 ```
 
+## Progress Report
+
+A simple progress bar can also be logged. One can modify the colors if desired
+
+```cs
+var pi = new ProgressIndicator(maxCount: 10, label: "Example Progress Status");
+pi.Increment(); // Increment the Progress
+pi.Increment(2); // Increment by given int
+
+10.0% [■■■...........................] | 1/10 | 0.104 @ 0.104/it ETA: 00:00:00 | Example Progress Status
+
+30.0% [■■■■■■■■■.....................] | 3/10 | 0.203 @ 0.099/it ETA: 00:00:00 | Example Progress Status
+```
+
+
 ## Example (Notebook)
 
 See [Example.ipynb](Example.ipynb) to get started!
