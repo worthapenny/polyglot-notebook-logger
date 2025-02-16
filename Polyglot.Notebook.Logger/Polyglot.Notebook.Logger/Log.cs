@@ -1,4 +1,7 @@
-﻿namespace Polyglot.Notebook.Logger;
+﻿using System.Collections;
+using System.Text;
+
+namespace Polyglot.Notebook.Logger;
 
 public class Log
 {
@@ -33,6 +36,13 @@ public class Log
         Console.WriteLine($"{DateColor}{DateTime.Now.ToString(DateTimeFormat)}{END} {SEP} {TypeColors.BackgroundError}{TypeColors.Error}{Text.TypeError}{END} {SEP} {MessageColors.Error}{message}{END}");
     }
 
+    public static void Error(Exception ex, string message)
+    {
+        message = $"{GetPrefixName()}{message}";
+        Console.WriteLine($"{DateColor}{DateTime.Now.ToString(DateTimeFormat)}{END} {SEP} {TypeColors.BackgroundError}{TypeColors.Error}{Text.TypeError}{END} {SEP} {MessageColors.Error}{message}{END}");
+        LogException(ex);
+    }
+
     public static void Critical(string message)
     {
         message = $"{GetPrefixName()}{message}";
@@ -41,6 +51,62 @@ public class Log
     #endregion
 
     #region Private Methods
+    private static void LogException(Exception ex, bool includeStackTrace = true, bool includeData = true)
+    {
+        LogExceptionRecursive(ex, 0, includeStackTrace, includeData);
+    }
+
+    private static void LogExceptionRecursive(Exception ex, int depth, bool includeStackTrace, bool includeData)
+    {
+        if (ex == null) return;
+        ex.Data["At"] = $"{DateTime.UtcNow:u}";
+
+        // Indent based on depth for nested exceptions
+        string indent = new string(' ', depth * 4);
+
+        // Basic exception information
+        Console.WriteLine($"{DateColor}{DateTime.Now.ToString(DateTimeFormat)}{END} {SEP} {TypeColors.BackgroundError}{TypeColors.Error}{Text.TypeError}{END} {SEP} {MessageColors.Error} {ex.Message}{END}");
+        Console.WriteLine($"{indent}{TypeColors.BackgroundError}{TypeColors.Error}Exception Type:{END} {ex.GetType().FullName}");
+        Console.WriteLine($"{indent}{TypeColors.BackgroundError}{TypeColors.Error}Source:{END} {TypeColors.Error}{ex.Source}{END}");
+
+        // Exception Data dictionary
+        if (includeData && ex.Data.Count > 0)
+        {
+            Console.WriteLine($"{indent}{TypeColors.BackgroundError}{TypeColors.Error}Additional Data:{END}");
+            foreach (DictionaryEntry entry in ex.Data)
+            {
+                Console.WriteLine($"{indent}    {TypeColors.BackgroundError}{TypeColors.Error}{entry.Key}{END}: {TypeColors.Error}{entry.Value}{END}");
+            }
+        }
+
+        // Stack Trace (formatted for readability)
+        if (includeStackTrace && !string.IsNullOrEmpty(ex.StackTrace))
+        {
+            Console.WriteLine($"{indent}Stack Trace:");
+            var stackLines = ex.StackTrace.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in stackLines)
+            {
+                Console.WriteLine($"{indent}    {TypeColors.Error}{line.Trim()}{END}");
+            }
+        }
+
+        // Handle inner exception
+        if (ex.InnerException != null)
+        {
+            Console.WriteLine($"{indent}{TypeColors.BackgroundError}{TypeColors.Error}Inner Exception:{END}");
+            LogExceptionRecursive(ex.InnerException, depth + 1, includeStackTrace, includeData);
+        }
+
+        // Handle aggregate exceptions
+        if (ex is AggregateException aggEx)
+        {
+            Console.WriteLine($"{indent}{TypeColors.BackgroundError} {TypeColors.Error} Aggregate Exceptions: {END}");
+            foreach (var innerEx in aggEx.InnerExceptions)
+            {
+                LogExceptionRecursive(innerEx, depth + 1, includeStackTrace, includeData);
+            }
+        }
+    }
     private static string GetPrefixName()
     {
         return string.IsNullOrEmpty(PrefixName)
